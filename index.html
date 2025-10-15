@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayur Saproo - Developer Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load GSAP for subtle animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- Load Lucide Icons for modern UI elements -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom styles for better aesthetics in the light theme */
+        :root {
+            --primary-color: #4f46e5; /* Indigo 600 */
+            --secondary-color: #6366f1; /* Indigo 500 */
+            --text-color: #1f2937; /* Gray 800 */
+            --bg-color: #ffffff;
+            --card-bg: #f9fafb; /* Gray 50 */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Responsive padding for sections */
+        section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Subtle hover effect for project cards */
+        .project-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom text gradient for section titles */
+        .gradient-text {
+            background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Custom Tailwind Tag Styles (Converted from @apply to plain CSS for stability) */
+        .tech-tag {
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #4b5563; /* text-gray-600 */
+            border: 1px solid #e5e7eb; /* border-gray-200 */
+            padding: 2px 12px; /* px-3 py-1 */
+            font-size: 12px; /* text-xs */
+            font-weight: 500; /* font-medium */
+            border-radius: 9999px; /* rounded-full */
+            display: inline-block;
+        }
+        .skill-tag {
+            background-color: #eef2ff; /* bg-accent-50 */
+            color: #4f46e5; /* text-accent-700 (using the primary color) */
+            border: 1px solid #c7d2fe; /* border-accent-200 */
+            padding: 4px 16px; /* px-4 py-1 */
+            font-size: 14px; /* text-sm */
+            font-weight: 500; /* font-medium */
+            border-radius: 9999px; /* rounded-full */
+            display: inline-block;
+        }
+        
+    </style>
+    <!-- Tailwind Configuration for 'Inter' font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            600: '#2563eb', // A nice blue for light theme accent
+                            800: '#1e40af',
+                        },
+                        accent: {
+                            600: '#4f46e5', // Indigo
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-accent-600">PORTFOLIO</div>
+            <div class="hidden md:flex space-x-6 text-gray-600">
+                <a href="#projects" class="hover:text-accent-600 transition duration-150">PROJECTS</a>
+                <a href="#skills" class="hover:text-accent-600 transition duration-150">SKILLS</a>
+                <a href="#contact" class="hover:text-accent-600 transition duration-150">CONTACTS</a>
+            </div>
+            <!-- Mobile Menu button (placeholder, for simplicity using single-page nav) -->
+        </nav>
+    </header>
+
+    <!-- 1. Intro Box / Hero Section -->
+    <section class="min-h-[70vh] flex flex-col justify-center items-center text-center pt-20" id="intro">
+        <div class="p-8 md:p-16 rounded-3xl bg-gray-50 border border-gray-100 shadow-xl max-w-4xl w-full">
+            <p class="text-xl text-accent-600 font-semibold mb-4 opacity-0" id="intro-subtitle">
+                Hello, I'm Mayur Saproo 
+            </p>
+            <p>Front-end Developer & AI/ML Enthusiast</p>
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter mb-6 text-gray-900 opacity-0" id="intro-title">
+                Helping others with <span class="gradient-text">Code & Intelligence</span>.
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto opacity-0" id="intro-description">
+                Focused on front-end development and predictive modeling, blending front-end user experience with robust back-end machine learning solutions.
+            </p>
+            <button onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });"
+                class="mt-8 px-8 py-3 bg-accent-600 text-white font-semibold rounded-full shadow-lg hover:bg-accent-800 transition duration-300 transform hover:scale-[1.02] opacity-0" id="intro-button">
+                View My Work
+            </button>
+        </div>
+    </section>
+
+    <!-- 2. Projects Section (4 Boxes) -->
+    <section id="projects" class="pt-8">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text">Selected Projects</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Project 1: Weather App -->
+            <div class="project-card p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl">
+                <div data-lucide="cloud-lightning" class="w-8 h-8 text-yellow-600 mb-4"></div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">1. Dynamic Weather App</h3>
+                <p class="text-gray-600 mb-4">Real-time weather data visualization for global locations.</p>
+                <div class="mb-4">
+                    <span class="inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Front-End Focus</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS (Tailwind)</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag bg-pink-100 text-pink-800">GSAP (Animation)</span>
+                    <span class="tech-tag">REST API</span>
+                </div>
+            </div>
+
+            <!-- Project 2: E-commerce Website for Clothing -->
+            <div class="project-card p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl">
+                <div data-lucide="shopping-bag" class="w-8 h-8 text-indigo-600 mb-4"></div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">2. Modern E-commerce Platform</h3>
+                <p class="text-gray-600 mb-4">Responsive clothing store with smooth browsing and checkout flow.</p>
+                <div class="mb-4">
+                    <span class="inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Front-End Focus</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS (Tailwind)</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag bg-pink-100 text-pink-800">GSAP (Interactions)</span>
+                    <span class="tech-tag">State Management</span>
+                </div>
+            </div>
+
+            <!-- Project 3: Conveyor Belt Maintenance Prediction (ML) -->
+            <div class="project-card p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl">
+                <div data-lucide="cog" class="w-8 h-8 text-red-600 mb-4"></div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">3. Predictive Maintenance ML Model</h3>
+                <p class="text-gray-600 mb-4">Predicting failure of industrial conveyor belts using sensor data.</p>
+                <div class="mb-4">
+                    <span class="inline-block bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Data Science / ML</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-tag">HTML/JS (Interface)</span>
+                    <span class="tech-tag">Python (Core Logic)</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">NumPy / Pandas</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">Scikit-learn (Prediction)</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">Matplotlib (Visualization)</span>
+                </div>
+            </div>
+
+            <!-- Project 4: AI Personalized Chatbot (ML) -->
+            <div class="project-card p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl">
+                <div data-lucide="bot" class="w-8 h-8 text-teal-600 mb-4"></div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">4. Personalized AI Chatbot</h3>
+                <p class="text-gray-600 mb-4">An intelligent assistant providing personalized, contextual responses.</p>
+                <div class="mb-4">
+                    <span class="inline-block bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Data Science / ML</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-tag">HTML/JS (Interface)</span>
+                    <span class="tech-tag">Python (Back-End)</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">NLP Libraries</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">TensorFlow / PyTorch</span>
+                    <span class="tech-tag bg-blue-100 text-blue-800">Custom Models</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Skills Section -->
+    <section id="skills" class="bg-gray-50 rounded-2xl">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text">Core Skills</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Development Skills -->
+            <div class="p-6 bg-white rounded-xl shadow-xl border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-primary-600 flex items-center">
+                    <div data-lucide="code" class="w-5 h-5 mr-2"></div>
+                    Web Development
+                </h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="skill-tag">HTML5 & CSS3</span>
+                    <span class="skill-tag">JavaScript </span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">GSAP</span>
+                    <span class="skill-tag">Responsive Design</span>
+                    <span class="skill-tag">React</span>
+                </div>
+            </div>
+
+            <!-- Data Science / ML Skills -->
+            <div class="p-6 bg-white rounded-xl shadow-xl border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-primary-600 flex items-center">
+                    <div data-lucide="brain-circuit" class="w-5 h-5 mr-2"></div>
+                    Machine Learning & AI
+                </h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">NumPy & Pandas</span>
+                    <span class="skill-tag">Scikit-learn</span>
+                    <span class="skill-tag">Matplotlib</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">NLP & CV Basics</span>
+                </div>
+            </div>
+
+            <!-- Tools & Workflow -->
+            <div class="p-6 bg-white rounded-xl shadow-xl border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-primary-600 flex items-center">
+                    <div data-lucide="wrench" class="w-5 h-5 mr-2"></div>
+                    Tools & Workflow
+                </h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="skill-tag">Git & GitHub</span>
+                    <span class="skill-tag">VS Code</span>
+                    <span class="skill-tag">RESTful APIs</span>
+                    <span class="skill-tag">Command Line</span>
+                    <span class="skill-tag">Jupyter Notebooks</span>
+                    <span class="skill-tag">Canva</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. Contact Me Section -->
+    <section id="contact" class="text-center pt-8">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 gradient-text">Get In Touch</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+            I'm always open to discussing new projects, collaboration opportunities, or technical challenges. Feel free to reach out!
+        </p>
+
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+
+            <!-- Phone Number -->
+            <div class="p-6 bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-sm transition duration-300 hover:ring-4 ring-accent-100">
+                <div data-lucide="phone" class="w-6 h-6 text-accent-600 mx-auto mb-3"></div>
+                <p class="text-sm text-gray-500">Call Me</p>
+                <a href="tel:+916006803075" class="text-xl font-semibold text-gray-800 hover:text-accent-600 transition duration-150">
+                    +91 6006803075
+                </a>
+            </div>
+
+            <!-- Email Address -->
+            <div class="p-6 bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-sm transition duration-300 hover:ring-4 ring-accent-100">
+                <div data-lucide="mail" class="w-6 h-6 text-accent-600 mx-auto mb-3"></div>
+                <p class="text-sm text-gray-500">Email Address</p>
+                <a href="mailto:mayursaproo0000@gmail.com" class="text-xl font-semibold text-gray-800 hover:text-accent-600 transition duration-150">
+                    mayursaproo0000@gmail.com
+                </a>
+            </div>
+
+        </div>
+
+        <p class="mt-16 text-gray-400 text-sm">&copy; 2025 Mayur Saproo. Built with Tailwind CSS and GSAP.</p>
+    </section>
+    
+    <!-- Social Media Fixed Sidebar -->
+    <div class="fixed bottom-4 left-4 z-20 hidden md:block">
+        <div class="flex flex-col space-y-3 p-2 bg-white/70 backdrop-blur-sm rounded-xl shadow-xl border border-gray-100">
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/mayursaproo" target="_blank" aria-label="LinkedIn Profile"
+                class="p-2 text-gray-700 hover:text-accent-600 transition duration-200 hover:scale-110">
+                <div data-lucide="linkedin" class="w-6 h-6"></div>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/mayursaproo" target="_blank" aria-label="GitHub Profile"
+                class="p-2 text-gray-700 hover:text-accent-600 transition duration-200 hover:scale-110">
+                <div data-lucide="github" class="w-6 h-6"></div>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com/mayursaproo" target="_blank" aria-label="Instagram Profile"
+                class="p-2 text-gray-700 hover:text-accent-600 transition duration-200 hover:scale-110">
+                <div data-lucide="instagram" class="w-6 h-6"></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript & GSAP Initialization -->
+    <script>
+        // Initialize Lucide Icons (must be called after all data-lucide elements are in the DOM)
+        lucide.createIcons();
+
+        // 1. GSAP Animation for Hero Section
+        function initGSAP() {
+            // Select elements by their IDs
+            const subtitle = document.getElementById('intro-subtitle');
+            const title = document.getElementById('intro-title');
+            const description = document.getElementById('intro-description');
+            const button = document.getElementById('intro-button');
+
+            // Set initial state (opacity: 0, slightly moved up)
+            gsap.set([subtitle, title, description, button], { opacity: 0, y: 20 });
+
+            // Create the timeline
+            const tl = gsap.timeline({ defaults: { duration: 0.8, ease: "power3.out" } });
+
+            tl.to(subtitle, { opacity: 1, y: 0, delay: 0.3 })
+              .to(title, { opacity: 1, y: 0 }, "-=0.5") // Overlap title animation
+              .to(description, { opacity: 1, y: 0 }, "-=0.4") // Overlap description animation
+              .to(button, { opacity: 1, y: 0 }, "-=0.3"); // Overlap button animation
+
+        }
+
+        // Wait for the window to load before running animations
+        window.onload = initGSAP;
+    </script>
+</body>
+</html>
